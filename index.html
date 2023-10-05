@@ -131,7 +131,7 @@
           e.preventDefault();
 
           // Get values from input fields
-          const basePrice = parseFloat(
+          const baseCardPurchaseCost = parseFloat(
             document.getElementById("basePrice").value
           );
           const currentRank = parseInt(
@@ -142,27 +142,23 @@
           // Calculate profitable price based on rank
           let profitablePrice = basePrice;
 
-          for (let rank = 1; rank < currentRank; rank++) {
+          for (let rank = 0; rank < currentRank; rank++) {
             switch (rank) {
-              case 1:
-                profitablePrice += basePrice + basePrice * taxRate;
-              case 2:
-                profitablePrice += basePrice + basePrice * taxRate;
-                break;
-              case 3:
-                profitablePrice +=
-                  basePrice +
-                  5 * basePrice +
-                  (basePrice + 5 * basePrice) * taxRate;
-                break;
-              case 4:
-                profitablePrice +=
-                  basePrice +
-                  10 * basePrice +
-                  (basePrice + 10 * basePrice) * taxRate;
-                break;
+                case 0:
+                    profitablePrice += baseCardPurchaseCost + baseCardPurchaseCost * taxRate; // Rank 0 to 1 cost
+                    break;
+                case 1:
+                case 2:
+                    profitablePrice += baseCardPurchaseCost + baseCardPurchaseCost * taxRate;
+                    break;
+                case 3:
+                    profitablePrice += (baseCardPurchaseCost + 5 * baseCardPurchaseCost) + (baseCardPurchaseCost + 5 * baseCardPurchaseCost) * taxRate;
+                    break;
+                case 4:
+                    profitablePrice += (baseCardPurchaseCost + 10 * baseCardPurchaseCost) + (baseCardPurchaseCost + 10 * baseCardPurchaseCost) * taxRate;
+                    break;
             }
-          }
+        }
 
           // Format the profitable price as currency
           const formattedPrice = new Intl.NumberFormat("en-US", {
