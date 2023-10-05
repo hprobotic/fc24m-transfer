@@ -145,6 +145,7 @@
           for (let rank = 1; rank < currentRank; rank++) {
             switch (rank) {
               case 1:
+                profitablePrice += basePrice + basePrice * taxRate;
               case 2:
                 profitablePrice += basePrice + basePrice * taxRate;
                 break;
