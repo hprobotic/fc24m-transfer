@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FIFA Transfer Market Profit Calculator</title>
+    <style>
+              /* Mobile-friendly styles */
+              body {
+                  font-family: Arial, sans-serif;
+                  margin: 0;
+                  padding: 0;
+                  background-color: #f2f2f2;
+              }
+
+            body {
+              min-height: 100vh;
+              display: flex;
+              flex-direction: column;
+          }
+
+              h1 {
+                  text-align: center;
+                  padding: 10px;
+                  background-color: #333;
+                  color: white;
+              }
+
+              form {
+                  max-width: 600px;
+                  width: 100%;
+                  margin: 0 auto;
+                  background-color: white;
+                  border-radius: 5px;
+                  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                  position: relative;
+                  padding: 20px;
+              }
+
+              label, input {
+                  display: block;
+                  margin-bottom: 15px;
+              }
+
+              input[type="number"] {
+                  width: calc(100% - 20px); /* Adjusted width to account for padding */
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 3px;
+              }
+
+
+              .button-container {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+              }
+
+              button {
+                  flex: 1;
+                  padding: 10px;
+                  background-color: #333;
+                  color: white;
+                  border: none;
+                  border-radius: 3px;
+                  cursor: pointer;
+              }
+
+            /* Add spacing between buttons */
+              button:first-child {
+                  margin-right: 5px;
+              }
+
+
+              button:hover {
+                  background-color: #555;
+              }
+              #profitResult {
+                  margin-top: 20px;
+                  text-align: center;
+                  font-size: 18px;
+                  color: #333;
+              }
+
+            footer {
+          color: rgb(86, 88, 105);
+          text-align: center;
+          padding: 10px 0;
+          font-size: 12px;
+          margin-top: auto; /* Push the footer to the bottom */
+      }
+
+      footer p {
+          margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>FC24 Mobile Transfer Market Profit Calculator</h1>
+
+    <form id="profitCalculatorForm">
+      <label for="basePrice">Base Card Price (in gold):</label>
+      <input type="number" id="basePrice" required />
+
+      <label for="currentRank">Current Player Rank:</label>
+      <input type="number" id="currentRank" required />
+
+      <div class="button-container">
+        <button type="submit">Calculate Profit</button>
+        <button type="button" id="clearButton" disabled>Clear</button>
+      </div>
+    </form>
+
+    <div id="profitResult">
+      <p>Approximate Profitable Price: <span id="profitPrice"></span> gold</p>
+    </div>
+
+    <footer>
+      <p>
+        Free Research Preview &copy; 2023 John@formsquare.co. All Rights
+        Reserved.
+      </p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("profitCalculatorForm");
+        const clearButton = document.getElementById("clearButton");
+        const profitPriceDisplay = document.getElementById("profitPrice");
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Get values from input fields
+          const basePrice = parseFloat(
+            document.getElementById("basePrice").value
+          );
+          const currentRank = parseInt(
+            document.getElementById("currentRank").value
+          );
+          const taxRate = 0.1; // 10% tax rate
+
+          // Calculate profitable price based on rank
+          let profitablePrice = basePrice;
+
+          for (let rank = 1; rank < currentRank; rank++) {
+            switch (rank) {
+              case 1:
+              case 2:
+                profitablePrice += basePrice + basePrice * taxRate;
+                break;
+              case 3:
+                profitablePrice +=
+                  basePrice +
+                  5 * basePrice +
+                  (basePrice + 5 * basePrice) * taxRate;
+                break;
+              case 4:
+                profitablePrice +=
+                  basePrice +
+                  10 * basePrice +
+                  (basePrice + 10 * basePrice) * taxRate;
+                break;
+            }
+          }
+
+          // Format the profitable price as currency
+          const formattedPrice = new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(profitablePrice);
+
+          // Display the formatted profitable price
+          profitPriceDisplay.textContent = formattedPrice;
+
+          // Enable the Clear button
+          clearButton.removeAttribute("disabled");
+        });
+
+        clearButton.addEventListener("click", function () {
+          // Clear the form and result
+          form.reset();
+          profitPriceDisplay.textContent = "";
+          clearButton.setAttribute("disabled", true);
+        });
+      });
+    </script>
+  </body>
+</html>
