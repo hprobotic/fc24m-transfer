@@ -122,27 +122,23 @@
     </footer>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const form = document.getElementById("profitCalculatorForm");
-        const clearButton = document.getElementById("clearButton");
-        const profitPriceDisplay = document.getElementById("profitPrice");
+      document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('profitCalculatorForm');
+    const clearButton = document.getElementById('clearButton');
+    const profitPriceDisplay = document.getElementById('profitPrice');
 
-        form.addEventListener("submit", function (e) {
-          e.preventDefault();
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-          // Get values from input fields
-          const baseCardPurchaseCost = parseFloat(
-            document.getElementById("basePrice").value
-          );
-          const currentRank = parseInt(
-            document.getElementById("currentRank").value
-          );
-          const taxRate = 0.1; // 10% tax rate
+        // Get values from input fields
+        const baseCardPurchaseCost = parseFloat(document.getElementById('basePrice').value);
+        const currentRank = parseInt(document.getElementById('currentRank').value);
+        const taxRate = 0.10; // 10% tax rate
 
-          // Calculate profitable price based on rank
-          let profitablePrice = basePrice;
+        // Calculate profitable price based on rank
+        let profitablePrice = baseCardPurchaseCost;
 
-          for (let rank = 0; rank < currentRank; rank++) {
+        for (let rank = 0; rank < currentRank; rank++) {
             switch (rank) {
                 case 0:
                     profitablePrice += baseCardPurchaseCost + baseCardPurchaseCost * taxRate; // Rank 0 to 1 cost
@@ -160,26 +156,22 @@
             }
         }
 
-          // Format the profitable price as currency
-          const formattedPrice = new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-          }).format(profitablePrice);
+        // Format the profitable price as currency
+        const formattedPrice = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(profitablePrice);
 
-          // Display the formatted profitable price
-          profitPriceDisplay.textContent = formattedPrice;
+        // Display the formatted profitable price
+        profitPriceDisplay.textContent = formattedPrice;
+    });
 
-          // Enable the Clear button
-          clearButton.removeAttribute("disabled");
-        });
-
-        clearButton.addEventListener("click", function () {
-          // Clear the form and result
-          form.reset();
-          profitPriceDisplay.textContent = "";
-          clearButton.setAttribute("disabled", true);
-        });
-      });
+    clearButton.addEventListener('click', function () {
+        // Clear the form and result
+        form.reset();
+        profitPriceDisplay.textContent = '';
+    });
+});
 
       if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./service-worker.js')
